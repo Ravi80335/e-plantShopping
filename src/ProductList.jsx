@@ -321,7 +321,7 @@ function ProductList({ onHomeClick }) {
               Plants
             </a>
           </div>
-          <div>
+          <div style={{ position: "relative" }}>
             {" "}
             <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
               <h1 className="cart">
@@ -347,6 +347,17 @@ function ProductList({ onHomeClick }) {
                 </svg>
               </h1>
             </a>
+            <span
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                pointerEvents: "none",
+              }}
+            >
+              {cart.length}
+            </span>
           </div>
         </div>
       </div>
@@ -354,9 +365,7 @@ function ProductList({ onHomeClick }) {
         <div className="product-grid">
           {plantsArray.map((category, index) => (
             <div key={index}>
-              <h1>
-                <div>{category.category}</div>
-              </h1>
+              <h1 style={{ textAlign: "center" }}>{category.category}</h1>
               <div className="product-list">
                 {category.plants.map((plant, plantIndex) => (
                   <div className="product-card" key={plantIndex}>
@@ -370,8 +379,11 @@ function ProductList({ onHomeClick }) {
                     <button
                       className="product-button"
                       onClick={() => handleAddToCart(plant)}
+                      disabled={cart.some((item) => item.name === plant.name)}
                     >
-                      Add to Cart
+                      {!cart.some((item) => item.name === plant.name)
+                        ? "Add to Cart"
+                        : "Added to Cart"}
                     </button>
                   </div>
                 ))}
